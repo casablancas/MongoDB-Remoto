@@ -5,6 +5,10 @@
  */
 package mongoremoto;
 
+import CRUD.Update;
+import CRUD.Delete;
+import CRUD.Read;
+import CRUD.Create;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -18,7 +22,7 @@ import com.mongodb.client.MongoDatabase;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Set;
-import mongoremoto.Pieza;
+import Objetcs.Pieza;
 
 /**
  *
@@ -42,6 +46,8 @@ public class MongoRemoto {
                ip = "23438",
                nameDB = "museosapp";
         
+        System.out.println("Conectando con la base de dato de Mongo...");
+        
         //String textUri = "mongodb://"+user+":"+pass+"@ds023438.mlab.com:"+ip+"/"+nameDB;
         String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
         //String textUri = "mongodb://alex:jimenez@ds023438.mlab.com/?authSource=museosapp&authMechanism=MONGODB-X509";
@@ -57,7 +63,8 @@ public class MongoRemoto {
          //DB db = mongoClient.getDB( "museosapp" );    //Versiones anteriores del JAR de Mongo.
          //MongoDatabase db = mongoClient.getDatabase("museosapp");   //Método nuevo para los JAR 3.X
          //mongoClient.getDatabase("museosapp")
-         //System.out.println("Connect to database successfully");
+         System.out.println("¡Conexión a la base de datos exitosamente!");
+         System.out.println("Obteniendo colecciones de la base de datos...");
          /*boolean auth = db.authenticate(myUserName, myPassword.toCharArray());
          db.
          System.out.println("Authentication: "+auth);
@@ -100,7 +107,7 @@ public class MongoRemoto {
               System.out.println("\nExisten: "+count+" colecciones.");
         } finally {
            cursor.close();
-           //mongoClient.close();
+           mongoClient.close();
         }
         
          
@@ -111,7 +118,7 @@ public class MongoRemoto {
 //        DBObject documento = coleccion.findOne();
 //        System.out.println( documento );
 
-        Pieza pieza = createPieza();
+        /*Pieza pieza = createPieza();
         DBObject doc = createDBObject(pieza);
 
         //create museo
@@ -129,7 +136,16 @@ public class MongoRemoto {
         while(cursor2.hasNext()){
             System.out.println(cursor2.next());
             mongoClient.close();
-        }
+        }*/
+        
+        Create c = new Create();
+        //c.createDocument();
+        Read r = new Read();
+        r.readDocumt();
+        Update u = new Update();
+        //u.updateDocument();
+        Delete d = new Delete();
+        //d.deleteDocument();
         
 }//Fin del main
     
