@@ -10,6 +10,10 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.bson.types.ObjectId;
 
 /**
@@ -26,10 +30,31 @@ public class FormularioMuseos extends javax.swing.JFrame {
         this.setTitle("Formulario para Museos de Puebla");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        lblLlenado.setVisible(false);
     }
-
-    public void createDocument()
-     {
+    
+    public void isComplete()
+    {
+        String museo = txtNombreMuseo.getText();
+        String categoria = txtCategoria.getText();
+        String idm = txtIdMuseo.getText();
+        String tel = txtTelefono.getText();
+        String lat = txtLatitud.getText();
+        String lon = txtLongitud.getText();
+        String des = txtDescripcion.getText();
+        String fbid = txtFacebookId.getText();
+        String twid = txtTwitterId.getText();
+        String web = txtWeb.getText();
+        String img = txtImagen.getText();
+        if (museo.equals("") || categoria.equals("") || idm.equals("") || tel.equals("")
+                || lat.equals("") || lon.equals("") || des.equals("") || fbid.equals("")
+                || twid.equals("") || web.equals("") || img.equals(""))
+        {
+           lblLlenado.setVisible(true);
+           System.out.println("Por favor, llena todos los campos requeridos.");
+        }else 
+        {
+           lblLlenado.setVisible(false);
            System.out.println("Accediendo a la base de datos...");
            String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
            //String textUri = "mongodb://alex:jimenez@ds023438.mlab.com/?authSource=museosapp&authMechanism=MONGODB-X509";
@@ -39,27 +64,35 @@ public class FormularioMuseos extends javax.swing.JFrame {
            DB db = mongoClient.getDB( "MongoLab-l" );
            
            System.out.println("Creando el documento en la colección...");
-           
-           DBCollection items = db.getCollection("piezas");
-           //Obtenemos el número de colecciones para establecer el ID del siguiente museo.
-           long count = items.count();
-           BasicDBObject doc1 = new BasicDBObject();
-           doc1.put("nombre", txtNombreMuseo.getText());
-           doc1.put("categoria", txtCategoria.getText());
-           doc1.put("id", (count+1));
-           doc1.put("imagen", txtImagen.getText());
-           doc1.put("telefono", txtTelefono.getText());
-           doc1.put("latitud", txtLatitud.getText());
-           doc1.put("longitud", txtLongitud.getText());
-           doc1.put("descripcion", txtDescripcion.getText());
-           doc1.put("facebookid", txtLongitud.getText());
-           doc1.put("twitterId", txtTwitterId.getText());
-           doc1.put("web", txtWeb.getText());
-           items.insert(doc1);
-           ObjectId id = (ObjectId)doc1.get( "_id" );
-           System.out.println("Document ID: "+doc1.get("_id"));
-           System.out.println("Se ha insertado 1 documento a la colección.");
-           mongoClient.close();
+               
+               DBCollection items = db.getCollection("museos");
+               //Obtenemos el número de colecciones para establecer el ID del siguiente museo.
+               long count = items.count();
+               BasicDBObject doc1 = new BasicDBObject();
+               doc1.put("nombre", txtNombreMuseo.getText());
+               doc1.put("categoria", txtCategoria.getText());
+               //doc1.put("id", (count+1));
+               doc1.put("id", txtIdMuseo.getText());
+               doc1.put("imagen", txtImagen.getText());
+               doc1.put("telefono", txtTelefono.getText());
+               doc1.put("latitud", txtLatitud.getText());
+               doc1.put("longitud", txtLongitud.getText());
+               doc1.put("descripcion", txtDescripcion.getText());
+               doc1.put("facebookid", txtLongitud.getText());
+               doc1.put("twitterId", txtTwitterId.getText());
+               doc1.put("web", txtWeb.getText());
+               items.insert(doc1);
+               ObjectId id = (ObjectId)doc1.get( "_id" );
+               System.out.println("Document ID: "+doc1.get("_id"));
+               System.out.println("Se ha insertado 1 documento a la colección.");
+               mongoClient.close();
+               lblLlenado.setText("Se ha insertado el documento");
+        }
+    }
+
+    public void createDocument()
+     {
+        isComplete();
      }
     
     /**
@@ -95,9 +128,17 @@ public class FormularioMuseos extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtImagen = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnCargarMuseo = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        lblLlenado = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/Icons/icon.png")).getImage());
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,7 +161,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
 
         jLabel8.setText("Latitud:");
 
-        jLabel16.setText("Longitud::");
+        jLabel16.setText("Longitud:");
 
         jLabel15.setText("Descripción:");
 
@@ -132,12 +173,36 @@ public class FormularioMuseos extends javax.swing.JFrame {
 
         jLabel17.setText("Imagen (URL):");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/arrows.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCargarMuseo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/arrows.png"))); // NOI18N
+        btnCargarMuseo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCargarMuseoActionPerformed(evt);
             }
         });
+
+        lblLlenado.setForeground(new java.awt.Color(204, 0, 0));
+        lblLlenado.setText("Por favor, llena todos los campos requeridos.");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 276, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(lblLlenado)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 29, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(lblLlenado)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -146,10 +211,6 @@ public class FormularioMuseos extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -169,7 +230,13 @@ public class FormularioMuseos extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(txtLatitud, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtLatitud, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel16)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -192,7 +259,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
+                            .addComponent(btnCargarMuseo)
                             .addComponent(txtImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
@@ -243,10 +310,13 @@ public class FormularioMuseos extends javax.swing.JFrame {
                             .addComponent(jLabel17))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16)))
+                    .addComponent(btnCargarMuseo)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtLongitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -273,49 +343,23 @@ public class FormularioMuseos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCargarMuseoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarMuseoActionPerformed
         // TODO add your handling code here:
         createDocument();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCargarMuseoActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        new Seleccion().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormularioMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormularioMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormularioMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormularioMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FormularioMuseos().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCargarMuseo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -329,6 +373,8 @@ public class FormularioMuseos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblLlenado;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtFacebookId;

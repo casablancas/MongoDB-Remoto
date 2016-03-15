@@ -5,6 +5,7 @@
  */
 package Views;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,6 +46,7 @@ public class Seleccion extends javax.swing.JFrame {
         btnPiezas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/Icons/icon.png")).getImage());
 
         btnMuseos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction2.png"))); // NOI18N
         btnMuseos.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +56,11 @@ public class Seleccion extends javax.swing.JFrame {
         });
 
         btnPiezas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/art2.png"))); // NOI18N
+        btnPiezas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPiezasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -84,6 +91,10 @@ public class Seleccion extends javax.swing.JFrame {
         new FormularioMuseos().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMuseosActionPerformed
+
+    private void btnPiezasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiezasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPiezasActionPerformed
 
     /**
      * @param args the command line arguments
