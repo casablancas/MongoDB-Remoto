@@ -11,6 +11,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import org.bson.types.ObjectId;
 
 /**
@@ -24,7 +25,7 @@ public class FormularioPiezas extends javax.swing.JFrame {
      */
     public FormularioPiezas() {
         initComponents();
-        this.setTitle("Formulario para Piezas de los Museos");
+        this.setTitle("Formulario para piezas de los museos");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         lblLlenado.setVisible(false);
@@ -176,6 +177,7 @@ public class FormularioPiezas extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setIconImage(new ImageIcon(getClass().getResource("/Icons/icon.png")).getImage());
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

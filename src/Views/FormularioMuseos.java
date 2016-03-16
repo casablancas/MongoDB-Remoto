@@ -28,7 +28,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
      */
     public FormularioMuseos() {
         initComponents();
-        this.setTitle("Formulario para Museos de Puebla");
+        this.setTitle("Formulario para los museos de Puebla");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         lblLlenado.setVisible(false);
