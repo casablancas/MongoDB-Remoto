@@ -7,7 +7,7 @@ package mongoremoto;
 
 import CRUD.Update;
 import CRUD.Delete;
-import CRUD.Read;
+import CRUD.ReadPiezas;
 import CRUD.Create;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
@@ -140,8 +140,8 @@ public class MongoRemoto {
         
         Create c = new Create();
         //c.createDocument();
-        Read r = new Read();
-        r.readDocumt();
+        ReadPiezas r = new ReadPiezas();
+        r.readDocumt("historia");
         Update u = new Update();
         //u.updateDocument();
         Delete d = new Delete();

@@ -33,6 +33,9 @@ public class FormularioMuseos extends javax.swing.JFrame {
         this.setResizable(false);
         lblLlenado.setVisible(false);
         panelEstado.setVisible(false);
+        txtIdMuseo.setEnabled(false);
+        txtFacebookId.setText("fb://page/");
+        idMuseo();
     }
     
     public void isWrong()
@@ -60,10 +63,32 @@ public class FormularioMuseos extends javax.swing.JFrame {
         txtLatitud.setText("");
         txtLongitud.setText("");
         txtDescripcion.setText("");
-        txtFacebookId.setText("");
+        txtFacebookId.setText("fb://page/");
         txtTwitterId.setText("");
         txtWeb.setText("");
         txtImagen.setText("");
+    }
+    
+    //Método para obtener el ID de Museo.
+    public void idMuseo()
+    {
+        System.out.println("Obteniendo el ID del siguiente museo...");
+        String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
+           //String textUri = "mongodb://alex:jimenez@ds023438.mlab.com/?authSource=museosapp&authMechanism=MONGODB-X509";
+           MongoClientURI uri = new MongoClientURI(textUri);
+           MongoClient mongoClient = new MongoClient(uri);
+           
+           DB db = mongoClient.getDB( "MongoLab-l" );
+           
+           //System.out.println("Creando el documento en la colección...");
+               
+               DBCollection items = db.getCollection("museos");
+               //Obtenemos el número de colecciones para establecer el ID del siguiente museo.
+               long count = (items.count()+1);
+               //Parseamos el valor de la variable "count" a un String 
+               //para poder almacenar el valor a la base de datos.
+               String id_museo = String.valueOf(count);
+               txtIdMuseo.setText(id_museo);
     }
     
     public void isComplete()
@@ -127,6 +152,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
                cleanJTextField();
                btnCargarMuseo.setEnabled(true);
                mongoClient.close();
+               idMuseo();
         }
     }
 
@@ -186,7 +212,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(137, 14, 79));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Llene el formato siguiente para poder cargar un Museo a la base de datos.");
 

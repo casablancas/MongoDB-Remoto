@@ -61,6 +61,7 @@ public class FormularioPiezas extends javax.swing.JFrame {
         txtImagen.setText("");
     }
     
+    //Método para obtener el ID de la Pieza.
     public void idPieza()
     {
         System.out.println("Obteniendo el ID de la pieza próxima...");
@@ -331,7 +332,7 @@ public class FormularioPiezas extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(137, 14, 79));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Llene el formato siguiente para poder cargar un Museo a la base de datos.");
 

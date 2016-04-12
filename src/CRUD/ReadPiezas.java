@@ -16,12 +16,12 @@ import com.mongodb.MongoClientURI;
  *
  * @author Alejandro
  */
-public class Read {
+public class ReadPiezas {
 
-    public Read() {
+    public ReadPiezas() {
     }
     
-    public void readDocumt(){
+    public void readDocumt(String qery){
     
         System.out.println("Accediendo a la base de datos...");
         String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
@@ -34,7 +34,7 @@ public class Read {
         DBCollection items = db.getCollection("piezas");
         
         BasicDBObject query = new BasicDBObject();
-        query.put("nombre", "Plancton");
+        query.put("nombre", qery);
         DBCursor cursor = items.find(query);
         // Print out "highest" priority items
         //System.out.println("query con la pieza 6:\n");
