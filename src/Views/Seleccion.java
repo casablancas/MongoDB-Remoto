@@ -45,43 +45,22 @@ public class Seleccion extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btnMuseos = new javax.swing.JButton();
-        btnPiezas = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jPanelMuseos = new javax.swing.JPanel();
+        btnMuseos = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jPanelPiezas = new javax.swing.JPanel();
+        btnPiezas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon(getClass().getResource("/Icons/icon.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnMuseos.setBackground(new java.awt.Color(137, 14, 79));
-        btnMuseos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction.png"))); // NOI18N
-        btnMuseos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnMuseos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction3.png"))); // NOI18N
-        btnMuseos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction2.png"))); // NOI18N
-        btnMuseos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMuseosActionPerformed(evt);
-            }
-        });
-
-        btnPiezas.setBackground(new java.awt.Color(137, 14, 79));
-        btnPiezas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/artt.png"))); // NOI18N
-        btnPiezas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/art3.png"))); // NOI18N
-        btnPiezas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/artt2.png"))); // NOI18N
-        btnPiezas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPiezasActionPerformed(evt);
-            }
-        });
-
-        jPanel2.setBackground(new java.awt.Color(137, 14, 79));
+        jPanel2.setBackground(new java.awt.Color(194, 23, 91));
         jPanel2.setForeground(new java.awt.Color(137, 14, 79));
 
         jLabel1.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
@@ -92,7 +71,7 @@ public class Seleccion extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 563, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -109,7 +88,7 @@ public class Seleccion extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel3.setBackground(new java.awt.Color(137, 14, 79));
+        jPanel3.setBackground(new java.awt.Color(194, 23, 91));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -122,7 +101,7 @@ public class Seleccion extends javax.swing.JFrame {
             .addGap(0, 25, Short.MAX_VALUE)
         );
 
-        jPanel7.setBackground(new java.awt.Color(137, 14, 79));
+        jPanel7.setBackground(new java.awt.Color(194, 23, 91));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -135,35 +114,75 @@ public class Seleccion extends javax.swing.JFrame {
             .addGap(0, 19, Short.MAX_VALUE)
         );
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelMuseos.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelMuseos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(137, 14, 79), 3, true), "Museos", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe WP Light", 1, 18), new java.awt.Color(194, 23, 91))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(194, 23, 91));
-        jLabel3.setText("Museos");
+        btnMuseos.setBackground(new java.awt.Color(137, 14, 79));
+        btnMuseos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction.png"))); // NOI18N
+        btnMuseos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnMuseos.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction3.png"))); // NOI18N
+        btnMuseos.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/construction2.png"))); // NOI18N
+        btnMuseos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMuseosActionPerformed(evt);
+            }
+        });
 
-        jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(194, 23, 91));
-        jLabel4.setText("Piezas");
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(21, 21, 21))
+        javax.swing.GroupLayout jPanelMuseosLayout = new javax.swing.GroupLayout(jPanelMuseos);
+        jPanelMuseos.setLayout(jPanelMuseosLayout);
+        jPanelMuseosLayout.setHorizontalGroup(
+            jPanelMuseosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 246, Short.MAX_VALUE)
+            .addGroup(jPanelMuseosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelMuseosLayout.createSequentialGroup()
+                    .addGap(74, 74, 74)
+                    .addComponent(btnMuseos)
+                    .addContainerGap(75, Short.MAX_VALUE)))
         );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanelMuseosLayout.setVerticalGroup(
+            jPanelMuseosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 95, Short.MAX_VALUE)
+            .addGroup(jPanelMuseosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelMuseosLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnMuseos)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/rsz_rsz_12icon.png"))); // NOI18N
+
+        jPanelPiezas.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelPiezas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(137, 14, 79), 3, true), "Piezas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe WP Light", 1, 18), new java.awt.Color(194, 23, 91))); // NOI18N
+
+        btnPiezas.setBackground(new java.awt.Color(137, 14, 79));
+        btnPiezas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/artt.png"))); // NOI18N
+        btnPiezas.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/art3.png"))); // NOI18N
+        btnPiezas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/artt2.png"))); // NOI18N
+        btnPiezas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPiezasActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelPiezasLayout = new javax.swing.GroupLayout(jPanelPiezas);
+        jPanelPiezas.setLayout(jPanelPiezasLayout);
+        jPanelPiezasLayout.setHorizontalGroup(
+            jPanelPiezasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanelPiezasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelPiezasLayout.createSequentialGroup()
+                    .addGap(74, 74, 74)
+                    .addComponent(btnPiezas)
+                    .addContainerGap(75, Short.MAX_VALUE)))
+        );
+        jPanelPiezasLayout.setVerticalGroup(
+            jPanelPiezasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 95, Short.MAX_VALUE)
+            .addGroup(jPanelPiezasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelPiezasLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnPiezas)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -173,28 +192,28 @@ public class Seleccion extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnMuseos)
-                        .addGap(52, 52, 52)
-                        .addComponent(btnPiezas)))
-                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelMuseos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelPiezas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPiezas)
-                    .addComponent(btnMuseos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanelMuseos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelPiezas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,13 +236,13 @@ public class Seleccion extends javax.swing.JFrame {
 
     private void btnMuseosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuseosActionPerformed
         // TODO add your handling code here:
-        new FormularioMuseos().setVisible(true);
+        new MuseoCRUD().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMuseosActionPerformed
 
     private void btnPiezasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiezasActionPerformed
         // TODO add your handling code here:
-        new FormularioPiezas().setVisible(true);
+        new PiezaCRUD().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPiezasActionPerformed
 
@@ -265,12 +284,12 @@ public class Seleccion extends javax.swing.JFrame {
     private javax.swing.JButton btnMuseos;
     private javax.swing.JButton btnPiezas;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanelMuseos;
+    private javax.swing.JPanel jPanelPiezas;
     // End of variables declaration//GEN-END:variables
 }

@@ -77,6 +77,7 @@ public class ShowMuseos extends javax.swing.JFrame {
                     String fbid = (String)obj.get("facebookid");
                     String twid = (String)obj.get("twitterId");
                     String inst = (String)obj.get("instagram");
+                    if(inst==("")){ System.out.println("HOLI BB");}
                     String web = (String)obj.get("web");
                     model.addRow(new Object[] { nombre, categoria, img, tel, direccion, lat, lon, desc, fbid, twid, inst, web });
                 }
@@ -109,9 +110,15 @@ public class ShowMuseos extends javax.swing.JFrame {
         txtName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(137, 14, 79));
+        jPanel1.setBackground(new java.awt.Color(194, 23, 91));
 
         jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -138,7 +145,7 @@ public class ShowMuseos extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(137, 14, 79), 3, true), "Museos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(137, 14, 79))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(137, 14, 79), 3, true), "Museos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(194, 23, 91))); // NOI18N
 
         jScrollPane1.setBorder(null);
 
@@ -221,6 +228,12 @@ public class ShowMuseos extends javax.swing.JFrame {
         ReadMuseos rm = new ReadMuseos();
         rm.readDocumt(txtName.getText());
     }//GEN-LAST:event_txtNameKeyReleased
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        new MuseoCRUD().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

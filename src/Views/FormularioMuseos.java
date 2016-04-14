@@ -210,7 +210,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(137, 14, 79));
+        jPanel1.setBackground(new java.awt.Color(194, 23, 91));
 
         jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,6 +272,8 @@ public class FormularioMuseos extends javax.swing.JFrame {
 
         btnCargarMuseo.setBackground(new java.awt.Color(137, 14, 79));
         btnCargarMuseo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/arrows.png"))); // NOI18N
+        btnCargarMuseo.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/arrows3.png"))); // NOI18N
+        btnCargarMuseo.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/arrows2.png"))); // NOI18N
         btnCargarMuseo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCargarMuseoActionPerformed(evt);
@@ -473,7 +475,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarMuseoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        new Seleccion().setVisible(true);
+        new MuseoCRUD().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
