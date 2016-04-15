@@ -155,17 +155,9 @@ public class ShowMuseos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tableData.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableData.setRowHeight(30);
         tableData.setSelectionBackground(new java.awt.Color(194, 23, 91));

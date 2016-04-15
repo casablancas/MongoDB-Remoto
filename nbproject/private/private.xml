@@ -4,16 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/ShowPiezas.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/Seleccion.java</file>
             <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/CRUD/Delete.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/SplashScreen/Load.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/SplashScreen/Splash.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/FormularioMuseos.java</file>
+            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/PiezaCRUD.java</file>
             <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/ShowMuseos.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/FormularioPiezas.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/Show.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/OptionCRUD.java</file>
-            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/ShowData.java</file>
+            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/CRUD/ReadPiezas.java</file>
+            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/CRUD/ReadMuseos.java</file>
+            <file>file:/C:/Users/alex_/Documents/NetBeansProjects/MongoRemoto/src/Views/MuseoCRUD.java</file>
         </group>
     </open-files>
 </project-private>

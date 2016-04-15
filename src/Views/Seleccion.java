@@ -236,7 +236,8 @@ public class Seleccion extends javax.swing.JFrame {
 
     private void btnMuseosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuseosActionPerformed
         // TODO add your handling code here:
-        new MuseoCRUD().setVisible(true);
+        //new MuseoCRUD().setVisible(true);
+        new AuthAdminMuseo().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMuseosActionPerformed
 
