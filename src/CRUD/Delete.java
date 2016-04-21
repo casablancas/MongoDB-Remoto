@@ -24,7 +24,7 @@ public class Delete {
     
      public void deleteDocument()
      {
-         System.out.println("Accediendo a la base de datos...");
+        System.out.println("Accediendo a la base de datos...");
         String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
         //String textUri = "mongodb://alex:jimenez@ds023438.mlab.com/?authSource=museosapp&authMechanism=MONGODB-X509";
         MongoClientURI uri = new MongoClientURI(textUri);

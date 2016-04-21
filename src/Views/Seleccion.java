@@ -5,6 +5,8 @@
  */
 package Views;
 
+import Views.Pieces.AuthAdminPieza;
+import Views.Museums.AuthAdminMuseo;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -243,7 +245,7 @@ public class Seleccion extends javax.swing.JFrame {
 
     private void btnPiezasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiezasActionPerformed
         // TODO add your handling code here:
-        new PiezaCRUD().setVisible(true);
+        new AuthAdminPieza().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPiezasActionPerformed
 
