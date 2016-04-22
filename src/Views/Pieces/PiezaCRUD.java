@@ -240,6 +240,8 @@ public class PiezaCRUD extends javax.swing.JFrame {
 
     private void btnMuseos3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMuseos3ActionPerformed
         // TODO add your handling code here:
+        new DeletePiezas().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMuseos3ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

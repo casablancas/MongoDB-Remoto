@@ -33,7 +33,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
         this.setResizable(false);
         lblLlenado.setVisible(false);
         panelEstado.setVisible(false);
-        txtIdMuseo.setEnabled(false);
+        //txtIdMuseo.setEnabled(false);
         txtFacebookId.setText("fb://page/");
         idMuseo();
     }
@@ -88,23 +88,24 @@ public class FormularioMuseos extends javax.swing.JFrame {
                //Parseamos el valor de la variable "count" a un String 
                //para poder almacenar el valor a la base de datos.
                String id_museo = String.valueOf(count);
-               txtIdMuseo.setText(id_museo);
+               //txtIdMuseo.setText(id_museo);
     }
     
     public void isComplete()
     {
         String museo = txtNombreMuseo.getText();
         String categoria = txtCategoria.getText();
-        String idm = txtIdMuseo.getText();
+        //String idm = txtIdMuseo.getText();
         String tel = txtTelefono.getText();
         String lat = txtLatitud.getText();
         String lon = txtLongitud.getText();
         String des = txtDescripcion.getText();
         String fbid = txtFacebookId.getText();
         String twid = txtTwitterId.getText();
+        String inst = txtIdMuseo.getText();
         String web = txtWeb.getText();
         String img = txtImagen.getText();
-        if (museo.equals("") || categoria.equals("") || idm.equals("") || tel.equals("")
+        if (museo.equals("") || categoria.equals("") || inst.equals("") || tel.equals("")
                 || lat.equals("") || lon.equals("") || des.equals("") || fbid.equals("")
                 || twid.equals("") || web.equals("") || img.equals(""))
         {
@@ -129,11 +130,12 @@ public class FormularioMuseos extends javax.swing.JFrame {
                DBCollection items = db.getCollection("museos");
                //Obtenemos el número de colecciones para establecer el ID del siguiente museo.
                long count = items.count();
+               String id_museo = String.valueOf(count);
                BasicDBObject doc1 = new BasicDBObject();
                doc1.put("nombre", txtNombreMuseo.getText());
                doc1.put("categoria", txtCategoria.getText());
                //doc1.put("id", (count+1));
-               doc1.put("id", txtIdMuseo.getText());
+               doc1.put("id", id_museo);
                doc1.put("imagen", txtImagen.getText());
                doc1.put("telefono", txtTelefono.getText());
                doc1.put("latitud", txtLatitud.getText());
@@ -141,6 +143,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
                doc1.put("descripcion", txtDescripcion.getText());
                doc1.put("facebookid", txtLongitud.getText());
                doc1.put("twitterId", txtTwitterId.getText());
+               doc1.put("instagram", txtTwitterId.getText());
                doc1.put("web", txtWeb.getText());
                items.insert(doc1);
                ObjectId id = (ObjectId)doc1.get( "_id" );
@@ -244,7 +247,7 @@ public class FormularioMuseos extends javax.swing.JFrame {
         jLabel2.setText("Categoría:");
 
         jLabel3.setForeground(new java.awt.Color(194, 23, 91));
-        jLabel3.setText("Id:");
+        jLabel3.setText("Instagram:");
 
         jLabel5.setForeground(new java.awt.Color(194, 23, 91));
         jLabel5.setText("Teléfono:");

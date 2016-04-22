@@ -3,15 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Views.Museums;
+package Views.Pieces;
 
+import Views.Museums.*;
 import CRUD.ReadMuseos;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -22,15 +28,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alejandro
  */
-public class ModifyMuseos extends javax.swing.JFrame {
+public class DeletePiezas extends javax.swing.JFrame {
 
     /**
      * Creates new form ShowMuseos
      */
-    public ModifyMuseos() {
+    public DeletePiezas() {
         initComponents();
         showTable();
-        this.setTitle("Museos registrados");
+        this.setTitle("Piezas registrados");
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         //tableData.setEditingRow(NORMAL);
@@ -44,6 +50,32 @@ public class ModifyMuseos extends javax.swing.JFrame {
         tableData.columnMoved(e);
     }
     
+    public void eliminar()
+    {
+        System.out.println("Accediendo a la base de datos...");
+        String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
+        //String textUri = "mongodb://alex:jimenez@ds023438.mlab.com/?authSource=museosapp&authMechanism=MONGODB-X509";
+        MongoClientURI uri = new MongoClientURI(textUri);
+        MongoClient mongoClient = new MongoClient(uri);
+           
+        DB db = mongoClient.getDB( "MongoLab-l" );
+        
+        int fila = tableData.getSelectedRow();
+        String nombrePieza = tableData.getValueAt(fila, 0).toString();
+        
+        DBCollection items = db.getCollection("piezas");
+        
+        BasicDBObject deleteQuery = new BasicDBObject();
+        deleteQuery.put("nombre", nombrePieza);
+        DBCursor cursor = items.find(deleteQuery);
+        System.out.println("Eliminando documento...");
+        while (cursor.hasNext()) {
+            DBObject item = cursor.next();
+            items.remove(item);
+            System.out.println("Se ha eliminado el documento requerido.");
+        }
+        
+    }
     
     
     public void showTable()
@@ -58,7 +90,7 @@ public class ModifyMuseos extends javax.swing.JFrame {
         
         DB db = mongoClient.getDB( "MongoLab-l" );
         
-        DBCollection items = db.getCollection("museos");
+        DBCollection items = db.getCollection("piezas");
         cursor = items.find();
         
         //Obtenemos el número de colecciones para establecer el ID del siguiente museo.
@@ -66,9 +98,9 @@ public class ModifyMuseos extends javax.swing.JFrame {
         //Parseamos el valor de la variable "count" a un String 
         //para poder mostrarlo en pantalla.
         String count_museos = String.valueOf(count);
-        lblCountMuseos.setText(count_museos);
+        lblCountPiezas.setText(count_museos);
         
-        String[] columnNames = {"Nombre", "Categoría", "URL Imagen", "Teléfono", "Dirección", "Latitud", "Longitud", "Descripcion", "FbID", "TwitterId", "Instagram", "Web"};
+        String[] columnNames = {"Nombre", "Descripción", "Autor", "Categoría", "Año"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         
         while(cursor.hasNext()) {
@@ -77,23 +109,24 @@ public class ModifyMuseos extends javax.swing.JFrame {
                     String categoria = (String)obj.get("categoria");
 //                    ObjectId id = (ObjectId)obj.get("_id");
                     //String id = (String)obj.get("id_pieza");
-                    String img = (String)obj.get("imagen");
-                    String tel = (String)obj.get("telefono");
-                    String direccion = (String)obj.get("direccion");
-                    String lat = (String)obj.get("latitud");
-                    String lon = (String)obj.get("longitud");
-                    String desc = (String)obj.get("descripcionCorta");
-                    String fbid = (String)obj.get("facebookid");
-                    String twid = (String)obj.get("twitterId");
-                    String inst = (String)obj.get("instagram");
-                    if(inst==("")){ System.out.println("HOLI BB");}
-                    String web = (String)obj.get("web");
-                    model.addRow(new Object[] { nombre, categoria, img, tel, direccion, lat, lon, desc, fbid, twid, inst, web });
+                    String autor = (String)obj.get("autor");
+                    String ano = (String)obj.get("ano");
+                    String descripcion = (String)obj.get("descripcion");
+                    model.addRow(new Object[] { nombre, categoria, autor, ano, descripcion});
                 }
                 
                 tableData.setModel(model);
                 tableData.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
+    
+    public void confirmacion(){
+        if (JOptionPane.showConfirmDialog(rootPane, "¿Realmente desea eliminar este elemento?",
+                "Confirmación para borrar profesor", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+        {
+            eliminar();
+            showTable();
+        }
+    } 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,10 +138,10 @@ public class ModifyMuseos extends javax.swing.JFrame {
     private void initComponents() {
 
         MenuTabla = new javax.swing.JPopupMenu();
-        Modificar = new javax.swing.JMenuItem();
+        Eliminar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        lblCountMuseos = new javax.swing.JLabel();
+        lblCountPiezas = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,20 +149,21 @@ public class ModifyMuseos extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int colIndex) {
 
-                return true; //Las celdas no son editables.
+                return false; //Las celdas no son editables.
 
             }
         };
         txtName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
-        Modificar.setText("Modificar");
-        Modificar.addActionListener(new java.awt.event.ActionListener() {
+        Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/cross.png"))); // NOI18N
+        Eliminar.setText("Eliminar");
+        Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModificarActionPerformed(evt);
+                EliminarActionPerformed(evt);
             }
         });
-        MenuTabla.add(Modificar);
+        MenuTabla.add(Eliminar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -144,14 +178,14 @@ public class ModifyMuseos extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Seleccione el Museo en el que desea editar la información:");
+        jLabel4.setText("Seleccione el Museo en el que desea eliminar:");
 
-        lblCountMuseos.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 14)); // NOI18N
-        lblCountMuseos.setForeground(new java.awt.Color(255, 255, 255));
+        lblCountPiezas.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 14)); // NOI18N
+        lblCountPiezas.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe WP Light", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Museos registrados:");
+        jLabel2.setText("Piezas registradas:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,7 +195,7 @@ public class ModifyMuseos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(lblCountMuseos)
+                .addComponent(lblCountPiezas)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -175,7 +209,7 @@ public class ModifyMuseos extends javax.swing.JFrame {
                 .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(lblCountMuseos))
+                    .addComponent(lblCountPiezas))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -184,7 +218,7 @@ public class ModifyMuseos extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(137, 14, 79), 3, true), "Museos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(194, 23, 91))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(137, 14, 79), 3, true), "Piezas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(194, 23, 91))); // NOI18N
 
         jScrollPane1.setBorder(null);
 
@@ -263,32 +297,14 @@ public class ModifyMuseos extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        new MuseoCRUD().setVisible(true);
+        new PiezaCRUD().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
-    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+    private void EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarActionPerformed
         // TODO add your handling code here:
-        int fila = tableData.getSelectedRow();
-        String nombre, categoria, imagen, tel, direccion, lat, lon, descripcion, fbid, twitterid, instagram, web;
-        if(fila>=0)
-        {   
-            //Obtenemos los valores que actualmente tiene cada campo de la tabla.
-            nombre = tableData.getValueAt(fila, 0).toString();
-            categoria = tableData.getValueAt(fila, 1).toString();
-            imagen = tableData.getValueAt(fila, 2).toString();
-            tel = tableData.getValueAt(fila, 3).toString();
-            lat = tableData.getValueAt(fila, 4).toString();
-            lon = tableData.getValueAt(fila, 5).toString();
-            descripcion = tableData.getValueAt(fila, 6).toString();
-            fbid = tableData.getValueAt(fila, 7).toString();
-            twitterid = tableData.getValueAt(fila, 8).toString();
-            instagram = tableData.getValueAt(fila, 9).toString();
-            web = tableData.getValueAt(fila, 10).toString();
-            //btnGuardar.setEnabled(true);
-        }else
-            JOptionPane.showMessageDialog(null, "Debe elegir el elemento de la tabla que desea modificar.", "No se seleccionó ningún elemento.", JOptionPane.ERROR_MESSAGE);
-    }//GEN-LAST:event_ModificarActionPerformed
+        confirmacion();
+    }//GEN-LAST:event_EliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -307,35 +323,41 @@ public class ModifyMuseos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModifyMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletePiezas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModifyMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletePiezas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModifyMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletePiezas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModifyMuseos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletePiezas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ModifyMuseos().setVisible(true);
+                new DeletePiezas().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Eliminar;
     private javax.swing.JPopupMenu MenuTabla;
-    private javax.swing.JMenuItem Modificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCountMuseos;
+    private javax.swing.JLabel lblCountPiezas;
     private javax.swing.JTable tableData;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables

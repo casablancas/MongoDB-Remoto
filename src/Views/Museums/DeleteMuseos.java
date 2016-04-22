@@ -185,7 +185,7 @@ public class DeleteMuseos extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe WP Light", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Seleccione el Museo en el que desea eliminar:");
+        jLabel4.setText("Seleccione el Museo que desea eliminar:");
 
         lblCountMuseos.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 14)); // NOI18N
         lblCountMuseos.setForeground(new java.awt.Color(255, 255, 255));

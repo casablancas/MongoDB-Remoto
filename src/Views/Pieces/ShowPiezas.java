@@ -49,6 +49,13 @@ public class ShowPiezas extends javax.swing.JFrame {
         DBCollection items = db.getCollection("piezas");
         cursor = items.find();
         
+        //Obtenemos el número de colecciones para establecer el ID del siguiente museo.
+        long count = (items.count());
+        //Parseamos el valor de la variable "count" a un String 
+        //para poder mostrarlo en pantalla.
+        String count_museos = String.valueOf(count);
+        lblCountPiezas.setText(count_museos);
+        
         String[] columnNames = {"Nombre", "Descripción", "Autor", "Categoría", "Año"};
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         
@@ -79,6 +86,8 @@ public class ShowPiezas extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        lblCountPiezas = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableData = new JTable(){
@@ -105,11 +114,23 @@ public class ShowPiezas extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("A continuación, se muestran todas las PIEZAS registradas en la base de datos de Museos App:");
 
+        lblCountPiezas.setFont(new java.awt.Font("Leelawadee UI Semilight", 1, 14)); // NOI18N
+        lblCountPiezas.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Segoe WP Light", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Piezas registradas:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(lblCountPiezas)
+                .addContainerGap(1145, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -118,7 +139,12 @@ public class ShowPiezas extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 59, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblCountPiezas))
+                .addContainerGap())
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -226,10 +252,12 @@ public class ShowPiezas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCountPiezas;
     private javax.swing.JTable tableData;
     // End of variables declaration//GEN-END:variables
 }
