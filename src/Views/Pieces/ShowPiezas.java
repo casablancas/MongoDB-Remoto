@@ -5,12 +5,29 @@
  */
 package Views.Pieces;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -74,6 +91,37 @@ public class ShowPiezas extends javax.swing.JFrame {
                 tableData.setModel(model);
                 tableData.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
+    
+    //Método para generar el código QR
+    private static void createQRImage(File qrfile, String qrcodetext, int size, String filetype) throws WriterException, IOException {
+
+        // Create the bytematrix for the QR-Code that encodes the given String
+        Hashtable hintmap = new Hashtable();
+        hintmap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+        QRCodeWriter qrcodewriter = new QRCodeWriter();
+        BitMatrix bytematrix = qrcodewriter.encode(qrcodetext,BarcodeFormat.QR_CODE, size, size, hintmap);
+
+        // Make the bufferedimage that are to hold the qrcode
+        int matrixwidth = bytematrix.getWidth();
+        BufferedImage image = new BufferedImage(matrixwidth, matrixwidth, BufferedImage.TYPE_INT_RGB);
+        image.createGraphics();
+        Graphics2D graphics = (Graphics2D) image.getGraphics();
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0, 0, matrixwidth, matrixwidth);
+
+        // Paint and save the image using the bytematrix
+        
+        Color museosColor = new Color (136, 14, 79);
+        graphics.setColor(museosColor);
+        for (int i = 0; i < matrixwidth; i++) {
+            for (int j = 0; j < matrixwidth; j++) {
+                if (bytematrix.get(i, j)) {
+                    graphics.fillRect(i, j, 1, 1);
+                }
+            }
+        }
+        ImageIO.write(image, filetype, qrfile);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,6 +132,8 @@ public class ShowPiezas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenuQR = new javax.swing.JPopupMenu();
+        jMenuItemGenerateQR = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lblCountPiezas = new javax.swing.JLabel();
@@ -98,6 +148,14 @@ public class ShowPiezas extends javax.swing.JFrame {
 
             }
         };
+
+        jMenuItemGenerateQR.setText("Generar QR");
+        jMenuItemGenerateQR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGenerateQRActionPerformed(evt);
+            }
+        });
+        jPopupMenuQR.add(jMenuItemGenerateQR);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -166,6 +224,7 @@ public class ShowPiezas extends javax.swing.JFrame {
             }
         ));
         tableData.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableData.setComponentPopupMenu(jPopupMenuQR);
         tableData.setRowHeight(30);
         tableData.setSelectionBackground(new java.awt.Color(194, 23, 91));
         tableData.getTableHeader().setReorderingAllowed(false);
@@ -215,6 +274,75 @@ public class ShowPiezas extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuItemGenerateQRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGenerateQRActionPerformed
+        // TODO add your handling code here:
+        try {
+            
+        System.out.println("Accediendo a la base de datos...");
+        String textUri = "mongodb://luis:conde@ds048878.mongolab.com:48878/MongoLab-l";
+        //String textUri = "mongodb://alex:jimenez@ds023438.mlab.com/?authSource=museosapp&authMechanism=MONGODB-X509";
+        MongoClientURI uri = new MongoClientURI(textUri);
+        MongoClient mongoClient = new MongoClient(uri);
+           
+        DB db = mongoClient.getDB( "MongoLab-l" );
+        
+        int fila = tableData.getSelectedRow();
+        String nombrePieza = tableData.getValueAt(fila, 0).toString();
+        
+        DBCollection items = db.getCollection("piezas");
+        
+        BasicDBObject qrQuery = new BasicDBObject();
+        BasicDBObject idQuery = new BasicDBObject();
+        qrQuery.put("nombre", nombrePieza);
+        idQuery.put("id_pieza", nombrePieza);
+        DBCursor cursor = items.find(qrQuery);
+        DBCursor cursor2 = items.find(idQuery);
+        
+        System.out.println("Generando QR...");
+        
+        while (cursor.hasNext()) {
+            DBObject item = cursor.next();
+            String id = (String)item.get("id_pieza");
+            String qrcodetext = "http://museosapp.azurewebsites.net/Piezas/"+id;
+            
+            String username = System.getProperty("user.name");
+            String filepath = "/Users/"+username+"/Desktop/"+nombrePieza+".png";
+            
+            int size = 560;
+            String filetype = "png";
+            File qrfile = new File(filepath);
+            
+            try {
+                createQRImage(qrfile, qrcodetext, size, filetype);
+            } catch (WriterException ex) {
+                Logger.getLogger(ShowPiezas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            //items.remove(item);
+            System.out.println("Se ha generado el código QR con éxito.");
+        }
+            
+            
+            
+            System.out.println("DONE");
+            
+            String username = System.getProperty("user.name");
+            
+            //String archivo = System.getProperty("user.dir")+"/"+nombrePieza+".png";
+            String archivo = "/Users/"+username+"/Desktop/"+nombrePieza+".png";
+            //codigo.renderBarcode(archivo);
+            
+//            Properties p = System.getProperties();
+//            p.list(System.out);
+            
+            Desktop d = Desktop.getDesktop();
+        
+            d.open(new File(archivo));
+        } catch (IOException ex) {
+            Logger.getLogger(ShowPiezas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItemGenerateQRActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -254,8 +382,10 @@ public class ShowPiezas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JMenuItem jMenuItemGenerateQR;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenuQR;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCountPiezas;
     private javax.swing.JTable tableData;
